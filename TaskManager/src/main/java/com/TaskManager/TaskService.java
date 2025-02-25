@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class TaskService {
 
-	@Autowired
+	@Autowired	
 	private TaskRepository taskRepository;
 
-	public Task createTask(String title, LocalDateTime completeBy) {
+	public Task createTask(String title, LocalDateTime completeBy, String description) {
 		if (title == null || title.length() == 0) {
 			throw new IllegalArgumentException("Invalid title");
 		}
@@ -21,7 +21,7 @@ public class TaskService {
 			throw new IllegalArgumentException("Invalid complete by date");
 
 		}
-		Task task = new Task(title, completeBy);
+		Task task = new Task(title, completeBy, description);
 		return taskRepository.save(task);
 	}
 
@@ -35,7 +35,25 @@ public class TaskService {
 
 	public List<Task> getAllTasks() {
 		return taskRepository.findAll();
-	}	
-	
-	public Task updateTask
+	}
+
+	public Task updateTask(Task task, String title, LocalDateTime completeBy, String description) {
+		if (title == null || title.length() == 0) {
+			throw new IllegalArgumentException("Invalid title");
+		}
+		if (completeBy == null || completeBy.isBefore(LocalDateTime.now())) {
+			throw new IllegalArgumentException("Invalid complete by date");
+		}
+		
+		task.setTitle(title);
+		task.setCompleteBy(completeBy);
+		task.setDescription(description);
+		return taskRepository.save(task);
+	}
+
+	public Task completeTask(Task task) {
+		task.setCompleted(true);
+		return taskRepository.save(task);
+	}
+
 }
