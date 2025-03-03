@@ -25,8 +25,12 @@ public class TaskService {
 		return taskRepository.save(task);
 	}
 
-	public void removeTask(Long id) {
+	public boolean deleteTask(Long id) {
+		if(taskRepository.findById(id).isPresent()) {
 		taskRepository.deleteById(id);
+		return true;
+		}
+		throw new IllegalArgumentException("Task does not exist.");
 	}
 
 	public Optional<Task> getTask(Long id) {
