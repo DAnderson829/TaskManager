@@ -33,7 +33,7 @@ public class TaskController {
         return ResponseEntity.ok(task);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/get/{id}")
     public ResponseEntity<Task> getTask(@PathVariable Long id) {
         Optional<Task> task = taskService.getTask(id);
         return task.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
