@@ -32,8 +32,8 @@ public class TaskController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Task> createTask(@RequestParam String Title, @RequestParam LocalDateTime completeBy, @RequestParam String description) {
-        Task task = taskService.createTask(Title, completeBy, description);
+    public ResponseEntity<Task> createTask(@RequestParam String title,  @RequestParam String description) {
+        Task task = taskService.createTask(title, description);
         return ResponseEntity.ok(task);
     }
 
@@ -64,10 +64,10 @@ public class TaskController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<String> updateTask(@PathVariable Long id, @RequestParam String title, @RequestParam LocalDateTime completeBy, @RequestParam String description, @RequestParam boolean isCompleted  ) {
+    public ResponseEntity<String> updateTask(@PathVariable Long id, @RequestParam String title,  @RequestParam String description, @RequestParam boolean isCompleted  ) {
         Optional<Task> task = taskService.getTask(id);
         if (task.isPresent()) {
-            Task updatedTask = taskService.updateTask(id, title, completeBy, description, isCompleted);
+            Task updatedTask = taskService.updateTask(id, title, description, isCompleted);
             return ResponseEntity.ok(updatedTask.toString());
         }
         return ResponseEntity.notFound().build();

@@ -26,19 +26,15 @@ public class Task {
 	@Column(name = "CreationDate", nullable = false)
 	private LocalDateTime creationDate;
 	
-	@Column(name = "CompleteBy", nullable = true)
-	private LocalDateTime completeBy;
-	
 	@Column(name = "Description", nullable = true)
 	private String description;
 
     public Task(){}
 
-	public Task(String title, LocalDateTime completeBy, String description){
+	public Task(String title, String description){
 		this.title = title;
 		this.completed = false;
 		this.creationDate = LocalDateTime.now();
-		this.completeBy = completeBy;
 		this.description = description;
 	}
 	
@@ -73,14 +69,6 @@ public class Task {
     public void setCreationDate(LocalDateTime creationDate) {
         this.creationDate = creationDate;
     }
-
-    public LocalDateTime getCompleteBy() {
-        return completeBy;
-    }
-
-    public void setCompleteBy(LocalDateTime completeBy) {
-        this.completeBy = completeBy;
-    }
     
     public void setDescription(String description) {
     	this.description = description;
@@ -96,8 +84,7 @@ public class Task {
 
     @Override
     public String toString() {
-        return  title + ":\n "+ (description != null ? description : " ") +
-                " Complete By: " + (completeBy != null ? completeBy : " never ") +
-                " Status: " + completed + " Task ID: " + taskID + "\n";
+        return  title + ":\n "+ (description != null ? description : " ")
+                + "| Status: " + completed + "| Task ID: " + taskID + "\n";
     }
 }
